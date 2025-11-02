@@ -1,0 +1,32 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+double calcBiWeekly(double annual) {
+    return annual / 26.0;
+}
+
+int main() {
+    ifstream infile("emp.txt");
+    string name;
+    double annual, biweekly, totalAnnual = 0;
+    int count = 0;
+
+    cout << fixed << setprecision(2);
+    cout << left << setw(10) << "Name" << right << setw(12) << "Annual" << setw(15) << "Biweekly" << endl;
+
+    while (infile >> name >> annual) {
+        biweekly = calcBiWeekly(annual);
+        cout << left << setw(10) << name << right << setw(12) << annual << setw(15) << biweekly << endl;
+        totalAnnual += annual;
+        count++;
+    }
+
+    cout << "\nTotal Employees: " << count;
+    cout << "\nAverage Annual Salary: $" << totalAnnual / count << endl;
+
+    infile.close();
+    return 0;
+}

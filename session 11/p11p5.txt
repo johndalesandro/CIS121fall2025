@@ -1,0 +1,45 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+void calcTuition(char code, double credits, double &rate, double &tuition, double &fees) {
+    if (code == 'I' || code == 'i')
+        rate = 250.00;
+    else
+        rate = 300.00;
+
+    tuition = rate * credits;
+    fees = tuition * 0.10; // 10% course fees
+}
+
+int main() {
+    ifstream infile("student.txt");
+    string last;
+    char code;
+    double credits, rate, tuition, fees;
+    double totalTuition = 0;
+    int count = 0;
+
+    cout << fixed << setprecision(2);
+    cout << left << setw(10) << "Name" << setw(8) << "Code" << right
+         << setw(10) << "Credits" << setw(12) << "Rate" << setw(12)
+         << "Tuition" << setw(10) << "Fees" << endl;
+
+    while (infile >> last >> code >> credits) {
+        calcTuition(code, credits, rate, tuition, fees);
+        cout << left << setw(10) << last << setw(8) << code << right
+             << setw(10) << credits << setw(12) << rate
+             << setw(12) << tuition << setw(10) << fees << endl;
+        totalTuition += tuition;
+        count++;
+    }
+
+    cout << "\nTotal Tuition Owed: $" << totalTuition;
+    cout << "\nNumber of Students: " << count;
+    cout << "\nAverage Tuition: $" << totalTuition / count << endl;
+
+    infile.close();
+    return 0;
+}
