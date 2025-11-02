@@ -1,0 +1,4 @@
+Honda Accord 25000 22000
+Honda CRV 30000 28000
+ToyotaCorolla 28000 25000
+Ford Fusion 23000 20000
