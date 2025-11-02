@@ -1,0 +1,36 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+void calcAuto(double msrp, double salePrice, double &savings, double &tax) {
+    savings = msrp - salePrice;
+    tax = salePrice * 0.07;
+}
+
+int main() {
+    ifstream infile("auto.txt");
+    string make, model;
+    double msrp, salePrice, savings, tax;
+    double totalSavings = 0, totalTax = 0;
+
+    cout << fixed << setprecision(2);
+    cout << left << setw(10) << "Make" << setw(12) << "Model"
+         << right << setw(10) << "MSRP" << setw(12) << "Price"
+         << setw(12) << "Savings" << setw(12) << "Tax" << endl;
+
+    while (infile >> make >> model >> msrp >> salePrice) {
+        calcAuto(msrp, salePrice, savings, tax);
+        cout << left << setw(10) << make << setw(12) << model
+             << right << setw(10) << msrp << setw(12) << salePrice
+             << setw(12) << savings << setw(12) << tax << endl;
+        totalSavings += savings;
+        totalTax += tax;
+    }
+
+    cout << "\nTotal Savings: $" << totalSavings;
+    cout << "\nTotal Tax: $" << totalTax << endl;
+    infile.close();
+    return 0;
+}

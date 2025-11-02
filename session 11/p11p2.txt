@@ -1,0 +1,36 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+double calcExtendedPrice(int qty, double cost) {
+    return qty * cost;
+}
+
+int main() {
+    ifstream infile("grocery.txt");
+    string item;
+    int qty;
+    double cost, ext, totalExt = 0, tax, total;
+
+    cout << fixed << setprecision(2);
+    cout << left << setw(12) << "Item" << right << setw(8) << "Qty"
+         << setw(10) << "Cost" << setw(12) << "ExtPrice" << endl;
+
+    while (infile >> item >> qty >> cost) {
+        ext = calcExtendedPrice(qty, cost);
+        totalExt += ext;
+        cout << left << setw(12) << item << right << setw(8) << qty
+             << setw(10) << cost << setw(12) << ext << endl;
+    }
+
+    tax = totalExt * 0.07;
+    total = totalExt + tax;
+    cout << "\nSubtotal: $" << totalExt
+         << "\nTax (7%): $" << tax
+         << "\nTotal: $" << total << endl;
+
+    infile.close();
+    return 0;
+}
