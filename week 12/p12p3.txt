@@ -1,0 +1,56 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+const int SIZE = 10;
+
+void loadData(string fname[], string lname[], double salary[], int &count) {
+    ifstream inFile("Empldata.txt");
+    count = 0;
+    while (inFile >> fname[count] >> lname[count] >> salary[count] && count < SIZE) {
+        count++;
+    }
+    inFile.close();
+}
+
+void displayData(string fname[], string lname[], double salary[], int count) {
+    cout << "Employee List:\n";
+    for (int i = 0; i < count; i++) {
+        cout << fname[i] << " " << lname[i] << " - $" << salary[i] << endl;
+    }
+    cout << endl;
+}
+
+int searchEmployee(string lname[], int count, string searchName) {
+    for (int i = 0; i < count; i++) {
+        if (lname[i] == searchName)
+            return i;
+    }
+    return -1;
+}
+
+int main() {
+    string fname[SIZE], lname[SIZE];
+    double salary[SIZE];
+    int count = 0;
+    string searchName;
+
+    loadData(fname, lname, salary, count);
+    displayData(fname, lname, salary, count);
+
+    cout << "Enter a last name to search for (Ctrl+Z to stop): ";
+    while (cin >> searchName) {
+        int index = searchEmployee(lname, count, searchName);
+        if (index != -1) {
+            cout << fname[index] << " " << lname[index] 
+                 << " earns $" << salary[index] << endl;
+        } else {
+            cout << searchName << " not found.\n";
+        }
+        cout << "\nEnter another last name (Ctrl+Z to stop): ";
+    }
+
+    cout << "\nGoodbye.\n";
+    return 0;
+}

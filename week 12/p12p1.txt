@@ -1,0 +1,47 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+const int SIZE = 10;
+
+void readStudents(string first[], string last[], double gpa[]) {
+    ifstream inFile("students.txt");
+    for (int i = 0; i < SIZE; i++) {
+        inFile >> first[i] >> last[i] >> gpa[i];
+    }
+    inFile.close();
+}
+
+void displayStudents(const string first[], const string last[], const double gpa[]) {
+    cout << left << setw(12) << "First" << setw(12) << "Last" << right << setw(6) << "GPA" << endl;
+    cout << "----------------------------------\n";
+    for (int i = 0; i < SIZE; i++) {
+        cout << left << setw(12) << first[i] << setw(12) << last[i] 
+             << right << setw(6) << fixed << setprecision(2) << gpa[i] << endl;
+    }
+}
+
+void displayReverse(const string first[], const string last[], const double gpa[]) {
+    cout << "\nStudents in Reverse Order:\n";
+    cout << "----------------------------------\n";
+    for (int i = SIZE - 1; i >= 0; i--) {
+        cout << left << setw(12) << first[i] << setw(12) << last[i] 
+             << right << setw(6) << fixed << setprecision(2) << gpa[i] << endl;
+    }
+}
+
+int main() {
+    string first[SIZE], last[SIZE];
+    double gpa[SIZE];
+
+    readStudents(first, last, gpa);
+
+    cout << "Students in Order:\n";
+    displayStudents(first, last, gpa);
+
+    displayReverse(first, last, gpa);
+
+    return 0;
+}
